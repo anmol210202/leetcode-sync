@@ -14669,8 +14669,10 @@ async function commit(params) {
   const minute = String(date.getUTCMinutes()).padStart(2, '0');
   const second = String(date.getUTCSeconds()).padStart(2, '0');
 
-  const dateString = `${year}/${month}/${day}_${hour}:${minute}:${second}`;
+  // Use dashes and underscores so the filename stays on one level.
+  const dateString = `${year}-${month}-${day}_${hour}-${minute}-${second}`;
   const solutionFileName = `solution_${dateString}.${LANG_TO_EXTENSION[submission.lang]}`;
+
 
   //*****************************************************************
   const solutionPath = path.join(prefix, folderName, solutionFileName);
