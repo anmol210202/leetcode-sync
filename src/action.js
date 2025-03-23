@@ -175,9 +175,9 @@ async function commit(params) {
   const dateString = new Date(Number(submission.timestamp) * 1000)
     .toISOString()
     .replace(/[:.-]/g, '_');
-  const solutionFileName = `solution_${dateString}.${LANG_TO_EXTENSION[submission.lang]}`;
+  // const solutionFileName = `solution_${dateString}.${LANG_TO_EXTENSION[submission.lang]}`;
+  const solutionFileName = `solutionAnnny.${LANG_TO_EXTENSION[submission.lang]}`;
 
-  // const FileName = `solution.${LANG_TO_EXTENSION[submission.lang]}`;
   const solutionPath = path.join(prefix, folderName, solutionFileName);
 
   const treeData = [
