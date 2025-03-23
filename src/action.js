@@ -171,7 +171,13 @@ async function commit(params) {
   const questionPath = path.join(prefix, folderName, "README.md");
 
   // Separate file for the solution
-  const solutionFileName = `solution.${LANG_TO_EXTENSION[submission.lang]}`;
+  //********************anny's modification**************************
+  const dateString = new Date(Number(submission.timestamp) * 1000)
+    .toISOString()
+    .replace(/[:.-]/g, '_');
+  const solutionFileName = `solution_${dateString}.${LANG_TO_EXTENSION[submission.lang]}`;
+
+  // const FileName = `solution.${LANG_TO_EXTENSION[submission.lang]}`;
   const solutionPath = path.join(prefix, folderName, solutionFileName);
 
   const treeData = [
