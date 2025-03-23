@@ -206,7 +206,7 @@ async function commit(params) {
     tree: treeData,
   });
 
-  const date = new Date(Number(submission.timestamp) * 1000).toISOString();
+  const commitDate = date.toISOString();
   const commitResponse = await octokit.git.createCommit({
     owner: owner,
     repo: repo,
@@ -216,12 +216,12 @@ async function commit(params) {
     author: {
       email: commitInfo.email,
       name: commitInfo.name,
-      date: date,
+      date: commitDate,
     },
     committer: {
       email: commitInfo.email,
       name: commitInfo.name,
-      date: date,
+      date: commitDate,
     },
   });
 
