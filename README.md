@@ -48,14 +48,15 @@ GitHub Action for automatically syncing LeetCode submissions to a GitHub reposit
 
        steps:
          - name: Sync
-           uses: joshcai/leetcode-sync@v1.7
+           uses: anmol210202/leetcode-sync@master
            with:
              github-token: ${{ github.token }}
              leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }}
              leetcode-session: ${{ secrets.LEETCODE_SESSION }}
              destination-folder: my-folder
+             filter-duplicate-secs: 0
              verbose: true
-             commit-header: "[LeetCode Sync]"
+             commit-header: "[Sync]"
    ```
 
 6. After you've submitted a LeetCode solution, run the workflow by going to the `Actions` tab, clicking the action name, e.g. `Sync Leetcode`, and then clicking `Run workflow`. The workflow will also automatically run once a week by default (can be configured via the `cron` parameter).
