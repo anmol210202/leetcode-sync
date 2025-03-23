@@ -172,11 +172,18 @@ async function commit(params) {
 
   // Separate file for the solution
   //********************anny's modification**************************
-  const dateString = new Date(Number(submission.timestamp) * 1000)
-    .toISOString()
-    .replace(/[:.-]/g, '_');
+  const date = new Date(Number(submission.timestamp) * 1000);
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const hour = String(date.getUTCHours()).padStart(2, '0');
+  const minute = String(date.getUTCMinutes()).padStart(2, '0');
+  const second = String(date.getUTCSeconds()).padStart(2, '0');
+
+  const dateString = `${year}/${month}/${day}_${hour}:${minute}:${second}`;
   const solutionFileName = `solution_${dateString}.${LANG_TO_EXTENSION[submission.lang]}`;
 
+  //*****************************************************************
   const solutionPath = path.join(prefix, folderName, solutionFileName);
 
   const treeData = [
