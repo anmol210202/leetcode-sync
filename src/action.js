@@ -176,7 +176,6 @@ async function commit(params) {
     .toISOString()
     .replace(/[:.-]/g, '_');
   const solutionFileName = `solution_${dateString}.${LANG_TO_EXTENSION[submission.lang]}`;
-  // const solutionFileName = `solutionAnnny.${LANG_TO_EXTENSION[submission.lang]}`;
 
   const solutionPath = path.join(prefix, folderName, solutionFileName);
 
