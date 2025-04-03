@@ -14760,7 +14760,6 @@ async function getQuestionData(titleSlug, leetcodeSession, csrfToken) {
   }
 }
 
-// Returns false if no more submissions should be added.
 function addToSubmissions(params) {
   const {
     response,
@@ -14770,31 +14769,54 @@ function addToSubmissions(params) {
     submissions,
   } = params;
 
-  for (const submission of response.data.data.submissionList.submissions) {
-    submissionTimestamp = Number(submission.timestamp);
+  // Retrieve the submissions list safely using optional chaining.
+  let submissionList = response?.data?.data?.submissionList?.submissions;
+
+  // If submissionList is falsy, there's nothing to process.
+  if (!submissionList) {
+    return true;
+  }
+
+  // Ensure submissionList is an array.
+  if (!Array.isArray(submissionList)) {
+    submissionList = [submissionList];
+  }
+
+  for (const submission of submissionList) {
+    const submissionTimestamp = Number(submission.timestamp);
+    
+    // If the submission is older than the last processed timestamp, stop adding.
     if (submissionTimestamp <= lastTimestamp) {
       return false;
     }
+    
+    // Process only accepted submissions.
     if (submission.statusDisplay !== "Accepted") {
       continue;
     }
+    
     const name = normalizeName(submission.title);
     const lang = submission.lang;
+    
     if (!submissions_dict[name]) {
       submissions_dict[name] = {};
     }
-    // Filter out other accepted solutions less than one day from the most recent one.
+    
+    // Skip if there is already an accepted solution in the same language within filterDuplicateSecs seconds.
     if (
       submissions_dict[name][lang] &&
       submissions_dict[name][lang] - submissionTimestamp < filterDuplicateSecs
     ) {
       continue;
     }
+    
     submissions_dict[name][lang] = submissionTimestamp;
     submissions.push(submission);
   }
+  
   return true;
 }
+
 
 async function sync(inputs) {
   const {
